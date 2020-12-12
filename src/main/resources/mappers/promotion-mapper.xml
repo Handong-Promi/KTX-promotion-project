@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Promotion">
+	
+	<update id="createTablePromotion">
+		create table PROMOTION (
+			seq int AUTO_INCREMENT,
+			departure varchar(32),
+			arrival varchar(32),
+			day date,
+			startTime time(6),
+			endTime time(6),
+			currentNum int(4),
+			maxNum int(4),
+			discountRate float,
+			originalPrice int(16),
+			discountPrice int(16),
+			master varchar(32),
+			primary key(seq)
+		);
+	</update>
+	
+	<insert id="insertPromotion">
+		insert into PROMOTION (departure, arrival, day, startTime, endTime, maxNum, discountRate, originalPrice, discountPrice, master)
+		values
+		(#{departure}, #{arrival}, #{day}, #{startTime}, #{endTime}, #{maxNum}, #{discountRate}, #{originalPrice}, #{discountPrice}, #{master})
+	</insert>
+	
+	<update id="updatePromotion">
+		update PROMOTION
+		set departure=#{departure}, 
+			arrival=#{arrival}, 
+			day=#{day}, 
+			startTime=#{startTime}, 
+			endTime=#{endTime}, 
+			maxNum=#{maxNum}, 
+			discountRate=#{discountRate}, 
+			originalPrice=#{originalPrice}, 
+			discountPrice=#{discountPrice}, 
+			master=#{master}
+		where seq=#{seq}
+	</update>
+	
+	<delete id="deletePromotion">
+		delete from PROMOTION where seq=#{seq}
+	</delete>
+	
+	<select id="getPromotion" resultType="promotion">
+		select * from PROMOTION where seq=#{seq}
+	</select>
+	
+	<select id="getPromotionList" resultType="promotion">	
+		select * from PROMOTION order by date(day) asc , startTime asc;
+	</select>
+</mapper>
